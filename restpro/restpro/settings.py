@@ -59,10 +59,11 @@ MIDDLEWARE = [
 
 
 ROOT_URLCONF = "restpro.urls"
-CORS_ORIGIN_ALLOW_ALL=False
-CORS_ORIGIN_WHITELIST=(
-    'https://localhost:5174',
-)
+
+CROS_ORIGIN_ALLOW_ALL=False
+CORS_ALLOWED_ORIGINS = [
+       "http://localhost:5173",
+]
 
 TEMPLATES = [
     {

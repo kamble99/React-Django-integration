@@ -1,51 +1,66 @@
-import React, { useEffect ,useState} from 'react'
-import { getAllFoods } from '../services/FoodServices'
-
-const FoodList = () => {
-    const [foods, setFoods] = React.useState([]);
-    useEffect(()=>{
-        getAllFoods().then((res)=>setFoods(res))
-    },[])
-
-    
+    import React, { useEffect ,useState} from 'react'
+    import { getAllFoods,Addfoods } from '../services/FoodServices'
+    import Addfood from './Addfood';
+    import Editfood from './Editfood';
 
 
-  return (
-        <>
-        <table border={1}>
-            <caption>Food List</caption>
-            <tr>
-                <th>ID:</th>
-                <th>Food Name: </th>
-                <th>Food Type: </th>
-                <th>Food Category:</th>
-                <th>Food Price: </th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Apple</td>
-                <td>Fruit</td>
-                <td>Itialin</td>
-                <td>10.00</td>
-            </tr>
-                
-             {
-                foods.map((foods)=>
-             
-                <tr key={index}>
-                    <td>{foods.id}</td>
-                    <td>{foods.foodName}</td>
-                    <td>{foods.foodtype}</td>
-                    <td>{foods.foodCategory}</td>
-                    <td>{foods.price}</td>
 
+    const FoodList = () => {
+        const [foods, setFoods] = React.useState([]);
+        const [showfood,setshowfood]=useState(false)
+        const [showeditfood,setshoweditfood]=useState(false)
+        const [editfood,seteditfood]=useState()
+        useEffect(()=>{
+            getAllFoods().then((res)=>setFoods(res))
+        },[])
+
+        function addfoodhandler(e){
+            e.preventDefault()
+            Addfoods(e.target).then((res)=>setshowfood(res)
+        )
+        }
+        function editfoodhandler(food){
+        
+            seteditfood(food)
+            setshoweditfood(true)
+        
+        }
+
+    return (
+            <>
+            <table border={1}>
+                <caption>Food List</caption>
+                <tr>
+                    <th>ID:</th>
+                    <th>Food Name: </th>
+                    <th>Food Type: </th>
+                    <th>Food Category:</th>
+                    <th>Food Price: </th>
+                    <th colSpan={2}>Action:</th>
                 </tr>
-             )}
-            
-            
-        </table>
-        </>
-  )
-}
+                {
+                    foods.map((food,index)=>
+                
+                    <tr key={food.id}>
+                        
+                        <td>{food.foodid}</td>
+                        <td>{food.foodName}</td>
+                        <td>{food.foodtype}</td>
+                        <td>{food.foodCategory}</td>
+                        <td>{food.price}</td>
+                        <td><button onClick={()=>editfoodhandler(food)}>Edit</button></td>
 
-export default FoodList
+                    </tr>
+                )}
+                
+                
+            </table>
+            <button onClick={()=>setshowfood(true)}>Add Food</button>
+            {showfood && <Addfood addfoodhandler={addfoodhandler}/>}
+            {showeditfood && <Editfood editfood={editfood}/>}
+
+            </>
+    )
+    }
+
+    export default FoodList
