@@ -1,36 +1,37 @@
 import React from 'react'
+import { updatefood } from '../services/FoodServices'
 
-const Editfood = ({editfood}) => {
-  return (
-    <>
-    <form>
+const Editfood = ({ editfood, updatedfood }) => {
+    return (
+        <>
+            <form onSubmit={(e) => { updatedfood(editfood.foodId, e) }}>
                 <table border={1}>
-                <tr>
+                    <tr>
                         <td>Existing id: </td>
-                        <td><input type="text" name="foodId"  value={editfood.foodId}/></td>
+                        <td><input type="text" name="foodId" value={editfood.foodId} /></td>
                     </tr>
                     <tr>
                         <td>Name: </td>
-                        <td><input type="text" name="foodName"  value={editfood.foodName}/></td>
+                        <td><input type="text" name="foodName" defaultValue={editfood.foodName} /></td>
                     </tr>
                     <tr>
                         <td>Type: </td>
-                        <td><input type="text" name="foodtype" value={editfood.foodtype}/></td>
+                        <td><input type="text" name="foodtype" defaultValue={editfood.foodtype} /></td>
                     </tr>
                     <tr>
                         <td>Category: </td>
-                        <td><input type="text" name="foodCategory" value={editfood.foodCategory} /></td>
+                        <td><input type="text" name="foodCategory" defaultValue={editfood.foodCategory} /></td>
                     </tr>
                     <tr>
                         <td>Price: </td>
-                        <td><input type="text" name="price" value={editfood.price}/></td>
+                        <td><input type="text" name="price" defaultValue={editfood.price} /></td>
                     </tr>
 
                 </table>
-                <input type="submit" />
+                <button type='submit'>Edit</button>
             </form>
-    </>
-  )
+        </>
+    )
 }
 
 export default Editfood
